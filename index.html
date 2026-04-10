@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>thinkEDU.com – Computer Education Institute</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#1a56db;--primary-dark:#1e429f;--secondary:#0e9f6e;
+  --accent:#ff5a1f;--bg:#f9fafb;--card:#fff;--text:#111827;
+  --text2:#6b7280;--border:#e5e7eb;--radius:12px;--shadow:0 2px 16px rgba(0,0,0,0.08);
+}
+body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:16px}
+a{text-decoration:none;color:inherit}
+.hidden{display:none!important}
+
+/* ===== NAV ===== */
+nav{background:#1e3a8a;color:#fff;padding:0 24px;display:flex;align-items:center;gap:12px;height:64px;position:sticky;top:0;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,0.2)}
+.logo{font-size:22px;font-weight:700;color:#fff;margin-right:auto;white-space:nowrap;flex-shrink:0}
+.logo span{color:#fbbf24}
+.nav-links{display:flex;align-items:center;gap:4px;flex-shrink:0}
+nav a.nav-link{color:rgba(255,255,255,0.85);font-size:14px;padding:6px 10px;border-radius:6px;cursor:pointer;transition:background .2s;white-space:nowrap;border:none;background:none;font-family:inherit}
+nav a.nav-link:hover,nav a.nav-link.active{background:rgba(255,255,255,0.15);color:#fff}
+.btn-login-nav{background:#fbbf24!important;color:#1e3a8a!important;font-weight:600!important;padding:6px 16px!important;border-radius:20px!important}
+.btn-login-nav:hover{background:#f59e0b!important}
+
+/* Language Switcher - NEW DESIGN */
+.lang-switcher{position:relative;flex-shrink:0}
+.lang-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:6px 12px;border-radius:20px;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:inherit}
+.lang-btn:hover{background:rgba(255,255,255,0.2)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-btn.open svg{transform:rotate(180deg)}
+.lang-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border:1px solid var(--border);border-radius:12px;padding:6px;min-width:180px;box-shadow:0 8px 30px rgba(0,0,0,0.15);z-index:2000;display:none;animation:fadeIn .15s ease}
+.lang-dropdown.open{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.lang-opt{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;cursor:pointer;color:#111827;font-size:14px;transition:background .15s}
+.lang-opt:hover{background:#eff6ff}
+.lang-opt.active-lang{background:#eff6ff;color:var(--primary);font-weight:600}
+.lang-opt .flag{font-size:18px;line-height:1}
+.lang-opt .lang-name{font-weight:500}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;flex-shrink:0;background:none;border:none}
+.hamburger span{width:24px;height:2px;background:#fff;border-radius:2px;display:block;transition:all .3s}
+.hamburger.is-open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.is-open span:nth-child(2){opacity:0}
+.hamburger.is-open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* Mobile Menu */
+#mobile-menu{display:none;flex-direction:column;background:#1e3a8a;padding:8px 0 16px;border-top:1px solid rgba(255,255,255,0.1);position:sticky;top:64px;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+#mobile-menu.open{display:flex}
+#mobile-menu a{color:rgba(255,255,255,0.9);padding:12px 24px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:15px;cursor:pointer;transition:background .15s;display:block;font-family:inherit;background:none;border-left:none;border-right:none;border-top:none;text-align:left;width:100%}
+#mobile-menu a:hover{background:rgba(255,255,255,0.1);color:#fff}
+#mobile-menu a:last-child{border-bottom:none}
+
+/* Mobile lang row inside mobile menu */
+.mobile-lang-row{padding:12px 24px 0;display:flex;flex-wrap:wrap;gap:8px}
+.mobile-lang-pill{padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.85);background:transparent;font-family:inherit;transition:all .15s;display:flex;align-items:center;gap:5px}
+.mobile-lang-pill:hover,.mobile-lang-pill.active-lang{background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.5)}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .lang-switcher{display:none}
+}
+
+/* ===== PAGES ===== */
+.page{display:none;min-height:calc(100vh - 64px)}
+.page.active{display:block}
+
+/* ===== HOME ===== */
+.hero{background:linear-gradient(135deg,#1e3a8a 0%,#1a56db 60%,#0e9f6e 100%);color:#fff;padding:80px 24px;text-align:center}
+.hero h1{font-size:clamp(28px,5vw,52px);font-weight:800;margin-bottom:16px}
+.hero h1 span{color:#fbbf24}
+.hero p{font-size:18px;opacity:.9;max-width:600px;margin:0 auto 32px}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 28px;border-radius:8px;font-weight:600;font-size:15px;cursor:pointer;transition:all .2s;border:none;font-family:inherit}
+.btn-primary{background:#fbbf24;color:#1e3a8a}
+.btn-primary:hover{background:#f59e0b}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.6)}
+.btn-outline:hover{background:rgba(255,255,255,0.1)}
+.stats-bar{background:#fff;display:flex;justify-content:center;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--border)}
+.stat-item{padding:20px 40px;text-align:center;border-right:1px solid var(--border)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-size:28px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:13px;color:var(--text2);margin-top:2px}
+.section{padding:60px 24px;max-width:1200px;margin:0 auto}
+.section-title{text-align:center;margin-bottom:40px}
+.section-title h2{font-size:clamp(22px,3vw,32px);font-weight:700;color:#1e3a8a}
+.section-title p{color:var(--text2);margin-top:8px;font-size:16px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.feature-card{background:var(--card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);text-align:center}
+.feature-icon{font-size:36px;margin-bottom:12px}
+.feature-card h3{font-size:17px;font-weight:600;margin-bottom:8px;color:#1e3a8a}
+.feature-card p{font-size:14px;color:var(--text2);line-height:1.6}
+.course-preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+.course-mini{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;cursor:pointer;transition:all .2s}
+.course-mini:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:var(--shadow)}
+.course-mini .c-icon{font-size:32px;margin-bottom:10px}
+.course-mini h4{font-size:14px;font-weight:600;color:#1e3a8a}
+.course-mini p{font-size:12px;color:var(--text2);margin-top:4px}
+
+/* ===== COURSES ===== */
+.courses-hero{background:#1e3a8a;color:#fff;padding:48px 24px;text-align:center}
+.courses-hero h1{font-size:clamp(24px,4vw,40px);font-weight:700}
+.courses-hero p{opacity:.85;margin-top:10px}
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;padding:40px 24px;max-width:1200px;margin:0 auto}
+.course-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:all .2s;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.course-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.12);border-color:var(--primary)}
+.course-card-banner{height:100px;display:flex;align-items:center;justify-content:center;font-size:48px}
+.course-card-body{padding:20px}
+.course-card-body h3{font-size:16px;font-weight:700;color:#1e3a8a;margin-bottom:6px}
+.course-card-body p{font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:14px}
+.course-tag{display:inline-block;background:#eff6ff;color:#1a56db;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.course-cta{display:block;width:100%;margin-top:14px;text-align:center;background:var(--primary);color:#fff;padding:10px;border-radius:8px;font-weight:600;font-size:14px;border:none;cursor:pointer;transition:background .2s;font-family:inherit}
+.course-cta:hover{background:var(--primary-dark)}
+
+/* ===== LOGIN MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:5000;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:#fff;border-radius:16px;padding:36px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,0.25);position:relative}
+.modal-box h2{font-size:22px;font-weight:700;color:#1e3a8a;margin-bottom:4px}
+.modal-box p.sub{font-size:14px;color:var(--text2);margin-bottom:24px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:13px;font-weight:600;color:#374151;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:15px;outline:none;transition:border .2s;font-family:inherit}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,86,219,0.1)}
+.btn-block{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s;font-family:inherit}
+.btn-block:hover{background:var(--primary-dark)}
+.modal-close{position:absolute;top:14px;right:18px;font-size:22px;cursor:pointer;color:var(--text2);background:none;border:none;line-height:1}
+.err-msg{color:#dc2626;font-size:13px;margin-top:8px;display:none}
+.link-text{color:var(--primary);cursor:pointer;font-weight:500}
+
+/* ===== VIDEO LESSON ===== */
+.lesson-page{padding:24px;max-width:1000px;margin:0 auto}
+.lesson-page h1{font-size:24px;font-weight:700;color:#1e3a8a;margin-bottom:6px}
+.lesson-meta{color:var(--text2);font-size:14px;margin-bottom:24px}
+.video-wrapper{background:#000;border-radius:12px;aspect-ratio:16/9;overflow:hidden;position:relative;user-select:none}
+.video-wrapper video{width:100%;height:100%;pointer-events:none}
+.video-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35)}
+.play-btn-big{width:72px;height:72px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:28px}
+.video-controls{background:#1e3a8a;padding:12px 20px;border-radius:0 0 12px 12px;display:flex;align-items:center;gap:16px}
+.vc-btn{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px}
+.vc-progress{flex:1;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;cursor:pointer;position:relative}
+.vc-fill{height:100%;background:#fbbf24;border-radius:2px;width:30%}
+.vc-time{color:rgba(255,255,255,0.8);font-size:13px;white-space:nowrap}
+.lesson-list{margin-top:28px}
+.lesson-list h3{font-weight:700;color:#1e3a8a;margin-bottom:12px;font-size:17px}
+.lesson-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.lesson-item:hover{border-color:var(--primary);background:#eff6ff}
+.lesson-item .li-num{width:28px;height:28px;background:#eff6ff;color:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.lesson-item.done .li-num{background:#d1fae5;color:#059669}
+.lesson-item h4{font-size:14px;font-weight:600;flex:1}
+.lesson-item .dur{font-size:12px;color:var(--text2)}
+
+/* ===== DASHBOARD ===== */
+.dashboard{padding:28px;max-width:1100px;margin:0 auto}
+.dash-welcome{background:linear-gradient(135deg,#1e3a8a,#1a56db);color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:28px;display:flex;align-items:center;gap:20px}
+.dash-avatar{width:64px;height:64px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;flex-shrink:0}
+.dash-welcome h2{font-size:22px;font-weight:700}
+.dash-welcome p{opacity:.85;margin-top:4px;font-size:15px}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px}
+.dash-stat{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.dash-stat-num{font-size:30px;font-weight:800;color:var(--primary)}
+.dash-stat-lbl{font-size:13px;color:var(--text2);margin-top:4px}
+.dash-section{margin-bottom:32px}
+.dash-section h3{font-size:18px;font-weight:700;color:#1e3a8a;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #eff6ff}
+.progress-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;cursor:pointer;transition:all .2s}
+.progress-card:hover{border-color:var(--primary)}
+.progress-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.progress-card-header h4{font-weight:600;color:#1e3a8a;font-size:15px}
+.progress-pct{font-weight:700;color:var(--primary);font-size:15px}
+.progress-bar{height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--secondary));transition:width .5s}
+.progress-info{display:flex;justify-content:space-between;margin-top:6px}
+.progress-info span{font-size:12px;color:var(--text2)}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.cert-icon{width:52px;height:52px;background:#fef3c7;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.cert-info h4{font-weight:600;color:#1e3a8a;font-size:15px}
+.cert-info p{font-size:13px;color:var(--text2);margin-top:2px}
+.cert-info .roll{font-size:12px;color:var(--primary);margin-top:4px;font-weight:500}
+
+/* ===== NOTES ===== */
+.notes-page{padding:40px 24px;max-width:1100px;margin:0 auto}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;margin-top:32px}
+.note-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;cursor:pointer;transition:all .2s}
+.note-card:hover{border-color:var(--primary);box-shadow:var(--shadow)}
+.note-card-icon{font-size:32px;margin-bottom:12px}
+.note-card h3{font-size:15px;font-weight:700;color:#1e3a8a;margin-bottom:4px}
+.note-card p{font-size:13px;color:var(--text2);margin-bottom:14px}
+.btn-download{background:#eff6ff;color:var(--primary);border:1px solid #bfdbfe;border-radius:6px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+.btn-download:hover{background:var(--primary);color:#fff}
+
+/* ===== QUIZ ===== */
+.quiz-page{padding:40px 24px;max-width:700px;margin:0 auto}
+.quiz-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;box-shadow:var(--shadow)}
+.quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.quiz-header h2{font-size:20px;font-weight:700;color:#1e3a8a}
+.quiz-badge{background:#eff6ff;color:var(--primary);padding:4px 14px;border-radius:20px;font-size:13px;font-weight:600}
+.quiz-q{font-size:18px;font-weight:600;color:#1e3a8a;margin-bottom:20px;line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:12px}
+.quiz-opt{padding:14px 18px;border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:15px;transition:all .2s;display:flex;align-items:center;gap:10px;background:none;width:100%;text-align:left;font-family:inherit}
+.quiz-opt:hover{border-color:var(--primary);background:#eff6ff}
+.quiz-opt.selected{border-color:var(--primary);background:#eff6ff;font-weight:600}
+.quiz-opt.correct{border-color:#059669;background:#d1fae5;color:#065f46}
+.quiz-opt.wrong{border-color:#dc2626;background:#fee2e2;color:#7f1d1d}
+.quiz-nav{display:flex;justify-content:space-between;margin-top:24px;align-items:center}
+.quiz-score{background:linear-gradient(135deg,#1e3a8a,#0e9f6e);color:#fff;border-radius:16px;padding:40px;text-align:center;margin-top:24px}
+.quiz-score h2{font-size:28px;font-weight:800}
+.quiz-score p{font-size:18px;opacity:.9;margin-top:8px}
+.score-circle{width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;margin:20px auto}
+
+/* ===== BLOG ===== */
+.blog-page{padding:40px 24px;max-width:1100px;margin:0 auto}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:32px}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .2s}
+.blog-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.blog-banner{height:140px;display:flex;align-items:center;justify-content:center;font-size:52px}
+.blog-body{padding:20px}
+.blog-tag{background:#eff6ff;color:var(--primary);font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600;display:inline-block;margin-bottom:8px}
+.blog-body h3{font-size:16px;font-weight:700;color:#1e3a8a;margin-bottom:8px;line-height:1.4}
+.blog-body p{font-size:13px;color:var(--text2);line-height:1.6}
+.blog-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:var(--text2)}
+
+/* ===== CERTIFICATE ===== */
+.cert-page{padding:60px 24px;max-width:700px;margin:0 auto;text-align:center}
+.cert-search-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;box-shadow:var(--shadow);margin-top:32px}
+.cert-search-box h2{font-size:22px;font-weight:700;color:#1e3a8a;margin-bottom:8px}
+.cert-search-box p{color:var(--text2);margin-bottom:24px;font-size:15px}
+.cert-input-row{display:flex;gap:12px}
+.cert-input-row input{flex:1;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:16px;outline:none;font-family:inherit}
+.cert-input-row input:focus{border-color:var(--primary)}
+.cert-result{margin-top:28px;padding:24px;border-radius:12px;display:none}
+.cert-result.found{background:#d1fae5;border:1px solid #a7f3d0}
+.cert-result.notfound{background:#fee2e2;border:1px solid #fca5a5}
+.cert-result h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.cert-details p{font-size:14px;line-height:1.8;color:#374151}
+.certificate-display{background:#fff;border:3px solid #1e3a8a;border-radius:12px;padding:32px;margin-top:20px;position:relative;overflow:hidden}
+.certificate-display::before{content:'';position:absolute;inset:6px;border:1px solid #fbbf24;border-radius:8px;pointer-events:none}
+.cert-header{color:#1e3a8a;font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.cert-title{font-size:28px;font-weight:900;color:#1e3a8a;margin-bottom:8px}
+.cert-name-big{font-size:22px;font-weight:700;color:#1a56db;margin:12px 0}
+.cert-completed{font-size:15px;color:#374151;margin-bottom:16px}
+.cert-footer-row{display:flex;justify-content:space-between;margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb;font-size:12px;color:#6b7280}
+
+/* ===== CONTACT ===== */
+.contact-page{padding:40px 24px;max-width:1000px;margin:0 auto}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:32px}
+.contact-info h3{font-size:20px;font-weight:700;color:#1e3a8a;margin-bottom:16px}
+.info-item{display:flex;gap:12px;margin-bottom:16px;align-items:flex-start}
+.info-icon{width:40px;height:40px;background:#eff6ff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.info-item h4{font-weight:600;font-size:14px;color:#1e3a8a}
+.info-item p{font-size:13px;color:var(--text2);margin-top:2px}
+.map-placeholder{background:#e5e7eb;border-radius:12px;height:200px;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:14px;margin-top:16px}
+.contact-form-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px}
+.contact-form-box h3{font-size:20px;font-weight:700;color:#1e3a8a;margin-bottom:20px}
+.success-msg{background:#d1fae5;color:#065f46;border:1px solid #a7f3d0;border-radius:8px;padding:12px 16px;font-size:14px;font-weight:600;display:none;margin-top:12px}
+
+/* ===== LOGIN PAGE ===== */
+.login-page{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#eff6ff,#f0fdf4)}
+.login-container{background:#fff;border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,0.12);overflow:hidden;width:100%;max-width:440px}
+.login-header{background:#1e3a8a;color:#fff;padding:32px;text-align:center}
+.login-header h2{font-size:24px;font-weight:800}
+.login-header p{opacity:.8;margin-top:6px;font-size:14px}
+.login-body{padding:32px}
+.tab-row{display:flex;gap:4px;margin-bottom:24px;background:#f3f4f6;border-radius:8px;padding:4px}
+.tab-btn{flex:1;padding:8px;border-radius:6px;border:none;background:transparent;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text2);font-family:inherit}
+.tab-btn.active{background:#fff;color:var(--primary);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+
+/* ===== FOOTER ===== */
+footer{background:#111827;color:#d1d5db;padding:48px 24px 24px;margin-top:60px}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;max-width:1200px;margin:0 auto;padding-bottom:32px;border-bottom:1px solid #374151}
+.footer-brand h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+.footer-brand span{color:#fbbf24}
+.footer-brand p{font-size:13px;line-height:1.7;color:#9ca3af}
+.footer-col h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.footer-col a{display:block;font-size:13px;color:#9ca3af;margin-bottom:8px;cursor:pointer;transition:color .2s;background:none;border:none;font-family:inherit;text-align:left;padding:0}
+.footer-col a:hover{color:#fff}
+.footer-bottom{text-align:center;padding-top:24px;font-size:13px;color:#6b7280;max-width:1200px;margin:0 auto}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:24px;right:24px;background:#1e3a8a;color:#fff;padding:14px 22px;border-radius:10px;font-size:14px;font-weight:600;z-index:9999;transform:translateY(100px);opacity:0;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ===== UPLOAD TRANSLATOR ===== */
+.translator-section{background:#eff6ff;border-radius:12px;padding:24px;margin:24px 0;border:1px solid #bfdbfe}
+.upload-area{border:2px dashed #93c5fd;border-radius:10px;padding:28px;text-align:center;cursor:pointer;transition:all .2s;background:#fff}
+.upload-area:hover{border-color:var(--primary);background:#eff6ff}
+.upload-area input{display:none}
+
+/* ===================================================
+   RESPONSIVE MEDIA QUERIES
+   ================================================ */
+
+/* Tablet (max 900px) */
+@media(max-width:900px){
+  .courses-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .features-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .blog-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+  .dash-welcome{padding:22px 24px}
+}
+
+/* Large mobile / small tablet (max 768px) */
+@media(max-width:768px){
+  .hero{padding:56px 20px}
+  .hero p{font-size:16px}
+  .section{padding:40px 16px}
+  .notes-page,.blog-page,.quiz-page,.contact-page,.cert-page{padding:28px 16px}
+  .dashboard{padding:20px 16px}
+  .lesson-page{padding:16px}
+  .courses-grid{padding:24px 16px;grid-template-columns:1fr 1fr}
+  .course-preview-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+  .notes-grid{grid-template-columns:1fr 1fr}
+  .blog-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .stat-item{padding:16px 20px;border-right:none;border-bottom:1px solid var(--border)}
+  .stats-bar{flex-direction:column;align-items:stretch}
+  .cert-search-box{padding:24px 20px}
+  .cert-footer-row{flex-direction:column;gap:8px;text-align:center}
+  .certificate-display{padding:20px 16px}
+  .cert-title{font-size:20px}
+  .dash-welcome{flex-direction:column;text-align:center;padding:24px 20px}
+  .dash-stats{grid-template-columns:repeat(2,1fr)}
+  .quiz-card{padding:24px 20px}
+  .quiz-q{font-size:16px}
+  footer{padding:36px 16px 20px;margin-top:40px}
+  .footer-grid{gap:24px}
+  .modal-box{padding:28px 20px}
+}
+
+/* Mobile (max 600px) */
+@media(max-width:600px){
+  .hero{padding:40px 16px}
+  .hero-btns{flex-direction:column;align-items:center;gap:12px}
+  .hero-btns .btn{width:100%;max-width:280px;text-align:center}
+  .courses-grid{grid-template-columns:1fr;padding:20px 16px}
+  .course-preview-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .course-mini{padding:14px 10px}
+  .notes-grid{grid-template-columns:1fr}
+  .dash-stats{grid-template-columns:repeat(2,1fr)}
+  .cert-input-row{flex-direction:column}
+  .cert-input-row .btn{width:100%}
+  .features-grid{grid-template-columns:1fr}
+  .feature-card{padding:20px}
+  .section-title h2{font-size:20px}
+  .section-title p{font-size:14px}
+  .lesson-page h1{font-size:18px}
+  .video-controls{gap:8px;padding:10px 12px}
+  .vc-time{font-size:11px}
+  .lesson-item{padding:10px 12px}
+  .quiz-opt{padding:12px 14px;font-size:14px}
+  .quiz-score{padding:28px 20px}
+  .quiz-score h2{font-size:22px}
+  .score-circle{width:80px;height:80px;font-size:24px}
+  .toast{right:12px;bottom:16px;left:12px;text-align:center}
+  .contact-form-box{padding:20px 16px}
+  .cert-search-box{padding:20px 16px}
+  footer{margin-top:32px}
+  .footer-grid{grid-template-columns:1fr}
+  .login-body{padding:24px 20px}
+  .modal-box{padding:24px 16px}
+  .blog-body h3{font-size:15px}
+}
+
+/* Extra small (max 380px) */
+@media(max-width:380px){
+  nav{padding:0 14px;gap:8px}
+  .logo{font-size:18px}
+  .dash-stats{grid-template-columns:1fr 1fr}
+  .dash-stat-num{font-size:24px}
+  .course-preview-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="logo">think<span>EDU</span>.com</div>
+
+  <!-- Desktop Nav Links -->
+  <div class="nav-links">
+    <a class="nav-link active" onclick="showPage('home')">Home</a>
+    <a class="nav-link" onclick="showPage('courses')">Courses</a>
+    <a class="nav-link" onclick="showPage('notes')">Notes</a>
+    <a class="nav-link" onclick="showPage('quiz')">Quiz</a>
+    <a class="nav-link" onclick="showPage('blogs')">Blog</a>
+    <a class="nav-link" onclick="showPage('certificate')">Verify Certificate</a>
+    <a class="nav-link" onclick="showPage('contact')">Contact</a>
+    <a class="nav-link" id="dashboard-link" style="display:none" onclick="showPage('dashboard')">Dashboard</a>
+    <a class="nav-link btn-login-nav" id="nav-login-btn" onclick="showPage('login')">Login</a>
+    <a class="nav-link" id="nav-logout-btn" style="display:none;color:#fca5a5" onclick="logout()">Logout</a>
+  </div>
+
+  <!-- Desktop Language Switcher (NEW) -->
+  <div class="lang-switcher" id="lang-switcher">
+    <button class="lang-btn" id="lang-btn" onclick="toggleLangDropdown(event)">
+      <span id="lang-btn-label">🌐 EN</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <div class="lang-dropdown" id="lang-dropdown">
+      <div class="lang-opt active-lang" data-lang="en" onclick="selectLang('en')"><span class="flag">🇬🇧</span><span class="lang-name">English</span></div>
+      <div class="lang-opt" data-lang="gu" onclick="selectLang('gu')"><span class="flag">🇮🇳</span><span class="lang-name">ગુજરાતી</span></div>
+      <div class="lang-opt" data-lang="hi" onclick="selectLang('hi')"><span class="flag">🇮🇳</span><span class="lang-name">हिन्दी</span></div>
+      <div class="lang-opt" data-lang="mr" onclick="selectLang('mr')"><span class="flag">🇮🇳</span><span class="lang-name">मराठी</span></div>
+      <div class="lang-opt" data-lang="ko" onclick="selectLang('ko')"><span class="flag">🇰🇷</span><span class="lang-name">한국어</span></div>
+      <div class="lang-opt" data-lang="ja" onclick="selectLang('ja')"><span class="flag">🇯🇵</span><span class="lang-name">日本語</span></div>
+      <div class="lang-opt" data-lang="zh" onclick="selectLang('zh')"><span class="flag">🇨🇳</span><span class="lang-name">中文</span></div>
+    </div>
+  </div>
+
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== MOBILE MENU ===== -->
+<div id="mobile-menu">
+  <a onclick="showPage('home');closeMobileMenu()">🏠 Home</a>
+  <a onclick="showPage('courses');closeMobileMenu()">📚 Courses</a>
+  <a onclick="showPage('notes');closeMobileMenu()">📄 Notes</a>
+  <a onclick="showPage('quiz');closeMobileMenu()">🧪 Quiz</a>
+  <a onclick="showPage('blogs');closeMobileMenu()">📰 Blog</a>
+  <a onclick="showPage('certificate');closeMobileMenu()">🏆 Verify Certificate</a>
+  <a onclick="showPage('contact');closeMobileMenu()">📞 Contact</a>
+  <a id="m-dash" style="display:none" onclick="showPage('dashboard');closeMobileMenu()">📊 Dashboard</a>
+  <a id="m-login-btn" onclick="showPage('login');closeMobileMenu()">🔐 Login / Register</a>
+  <a id="m-logout-btn" style="display:none;color:#fca5a5" onclick="logout();closeMobileMenu()">🚪 Logout</a>
+  <!-- Mobile Language Pills -->
+  <div class="mobile-lang-row" id="mobile-lang-row">
+    <button class="mobile-lang-pill active-lang" data-lang="en" onclick="selectLang('en')">🇬🇧 EN</button>
+    <button class="mobile-lang-pill" data-lang="gu" onclick="selectLang('gu')">🇮🇳 ગુ</button>
+    <button class="mobile-lang-pill" data-lang="hi" onclick="selectLang('hi')">🇮🇳 हि</button>
+    <button class="mobile-lang-pill" data-lang="mr" onclick="selectLang('mr')">🇮🇳 म</button>
+    <button class="mobile-lang-pill" data-lang="ko" onclick="selectLang('ko')">🇰🇷 KO</button>
+    <button class="mobile-lang-pill" data-lang="ja" onclick="selectLang('ja')">🇯🇵 JP</button>
+    <button class="mobile-lang-pill" data-lang="zh" onclick="selectLang('zh')">🇨🇳 中</button>
+  </div>
+</div>
+
+<!-- ========== HOME ========== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <h1>Welcome to <span>thinkEDU.com</span></h1>
+    <p data-i18n="hero_sub">India's leading computer education institute — Learn, Practice, and Get Certified online.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" onclick="showPage('courses')">Explore Courses</a>
+      <a class="btn btn-outline" onclick="showPage('login')">Student Login</a>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">5000+</div><div class="stat-label" data-i18n="stat1">Students Enrolled</div></div>
+    <div class="stat-item"><div class="stat-num">11</div><div class="stat-label" data-i18n="stat2">Courses Available</div></div>
+    <div class="stat-item"><div class="stat-num">200+</div><div class="stat-label" data-i18n="stat3">Video Lessons</div></div>
+    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label" data-i18n="stat4">Pass Rate</div></div>
+  </div>
+  <div class="section">
+    <div class="section-title"><h2 data-i18n="why_title">Why Choose thinkEDU?</h2><p data-i18n="why_sub">Everything you need for a complete computer education journey</p></div>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon">🎥</div><h3 data-i18n="f1">Secure Video Lessons</h3><p>HD quality lessons that cannot be downloaded or screen-recorded easily.</p></div>
+      <div class="feature-card"><div class="feature-icon">📄</div><h3 data-i18n="f2">PDF Notes</h3><p>Download comprehensive notes for every chapter in all courses.</p></div>
+      <div class="feature-card"><div class="feature-icon">🧪</div><h3 data-i18n="f3">Online Quizzes</h3><p>Test your knowledge with timed quizzes and instant feedback.</p></div>
+      <div class="feature-card"><div class="feature-icon">🏆</div><h3 data-i18n="f4">Verified Certificates</h3><p>Get industry-recognized certificates verifiable online by your roll number.</p></div>
+      <div class="feature-card"><div class="feature-icon">📱</div><h3 data-i18n="f5">Mobile Friendly</h3><p>Learn on any device — mobile, tablet, or desktop.</p></div>
+      <div class="feature-card"><div class="feature-icon">🌐</div><h3 data-i18n="f6">Multi-language</h3><p>Content available in 7 languages for maximum accessibility.</p></div>
+    </div>
+  </div>
+  <div style="background:#eff6ff;padding:40px 0">
+    <div class="section" style="padding-top:0;padding-bottom:0">
+      <div class="section-title"><h2 data-i18n="courses_title">Our Courses</h2><p>Click any course to start learning</p></div>
+      <div class="course-preview-grid" id="home-courses"></div>
+    </div>
+  </div>
+
+  <!-- Text File Translator -->
+  <div class="section">
+    <div class="section-title"><h2>📄 Translate Any Text File</h2><p>Upload a .txt file and it will be translated to your selected language</p></div>
+    <div class="translator-section">
+      <div class="upload-area" onclick="document.getElementById('file-upload').click()">
+        <input type="file" id="file-upload" accept=".txt" onchange="handleFileUpload(event)">
+        <p style="font-size:40px;margin-bottom:10px">📂</p>
+        <p style="font-weight:600;color:#1e3a8a">Click to upload a .txt file</p>
+        <p style="font-size:13px;color:var(--text2);margin-top:6px">Supports plain text files (.txt)</p>
+      </div>
+      <div id="translated-output" style="display:none;margin-top:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px">
+          <h4 style="color:#1e3a8a;font-weight:700" id="trans-lang-label">Translated Content:</h4>
+          <button class="btn btn-primary" style="font-size:13px;padding:8px 16px" onclick="downloadTranslated()">⬇ Download Translated</button>
+        </div>
+        <div id="trans-content" style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px;font-size:14px;line-height:1.8;max-height:300px;overflow-y:auto;white-space:pre-wrap;color:var(--text)"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== COURSES ========== -->
+<div id="page-courses" class="page">
+  <div class="courses-hero">
+    <h1 data-i18n="courses_page_title">All Courses</h1>
+    <p data-i18n="courses_page_sub">Choose a course and start your learning journey today</p>
+  </div>
+  <div class="courses-grid" id="main-courses-grid"></div>
+</div>
+
+<!-- ========== LESSON ========== -->
+<div id="page-lesson" class="page">
+  <div class="lesson-page">
+    <a onclick="showPage('courses')" style="color:var(--primary);font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;margin-bottom:20px">← Back to Courses</a>
+    <h1 id="lesson-title">Course Name</h1>
+    <div class="lesson-meta" id="lesson-meta">Module 1 • 8 Lessons • Enrolled</div>
+    <div class="video-wrapper" id="video-wrapper" oncontextmenu="return false">
+      <video id="main-video" preload="none" controlsList="nodownload nofullscreen" disablePictureInPicture>
+        <source src="" type="video/mp4">
+      </video>
+      <div class="video-overlay" id="video-overlay" onclick="togglePlay()">
+        <div class="play-btn-big">▶</div>
+      </div>
+    </div>
+    <div class="video-controls">
+      <button class="vc-btn" onclick="togglePlay()" id="play-icon">▶</button>
+      <div class="vc-progress" onclick="seekVideo(event)"><div class="vc-fill" id="vc-fill"></div></div>
+      <span class="vc-time" id="vc-time">0:00 / 0:00</span>
+      <button class="vc-btn" onclick="toggleMute()">🔊</button>
+    </div>
+    <div class="lesson-list">
+      <h3>Lessons in this Course</h3>
+      <div id="lessons-container"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== DASHBOARD ========== -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard">
+    <div class="dash-welcome">
+      <div class="dash-avatar" id="dash-avatar">S</div>
+      <div>
+        <h2 id="dash-name">Welcome back, Student!</h2>
+        <p id="dash-activity">You have 3 lessons pending. Keep going!</p>
+      </div>
+    </div>
+    <div class="dash-stats">
+      <div class="dash-stat"><div class="dash-stat-num" id="ds-enrolled">2</div><div class="dash-stat-lbl">Courses Enrolled</div></div>
+      <div class="dash-stat"><div class="dash-stat-num" id="ds-lessons">14</div><div class="dash-stat-lbl">Lessons Completed</div></div>
+      <div class="dash-stat"><div class="dash-stat-num" id="ds-certs">1</div><div class="dash-stat-lbl">Certificates Earned</div></div>
+      <div class="dash-stat"><div class="dash-stat-num" id="ds-quiz">85%</div><div class="dash-stat-lbl">Quiz Average</div></div>
+    </div>
+    <div class="dash-section">
+      <h3>📚 Course Progress</h3>
+      <div id="dash-progress"></div>
+    </div>
+    <div class="dash-section">
+      <h3>🏆 My Certificates</h3>
+      <div id="dash-certs"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== NOTES ========== -->
+<div id="page-notes" class="page">
+  <div class="notes-page">
+    <div class="section-title"><h2>📄 Study Notes & PDF Downloads</h2><p>Download chapter-wise PDF notes for all courses</p></div>
+    <div class="notes-grid" id="notes-grid"></div>
+  </div>
+</div>
+
+<!-- ========== QUIZ ========== -->
+<div id="page-quiz" class="page">
+  <div class="quiz-page">
+    <div class="section-title"><h2>🧪 Online Quiz</h2><p>Test your computer knowledge</p></div>
+    <div id="quiz-select" style="margin-top:24px">
+      <div class="course-preview-grid" id="quiz-course-select"></div>
+    </div>
+    <div id="quiz-area" style="display:none;margin-top:24px">
+      <div class="quiz-card">
+        <div class="quiz-header">
+          <h2 id="quiz-course-name">Basic Computer</h2>
+          <span class="quiz-badge" id="quiz-progress-badge">Q 1/10</span>
+        </div>
+        <p class="quiz-q" id="quiz-question">Loading...</p>
+        <div class="quiz-options" id="quiz-options"></div>
+        <div class="quiz-nav">
+          <span style="font-size:13px;color:var(--text2)" id="quiz-feedback"></span>
+          <button class="btn btn-primary" id="quiz-next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+        </div>
+      </div>
+    </div>
+    <div id="quiz-result" style="display:none">
+      <div class="quiz-score">
+        <h2>Quiz Completed! 🎉</h2>
+        <div class="score-circle" id="score-circle">0</div>
+        <p id="score-msg">Great performance!</p>
+        <button class="btn btn-outline" onclick="resetQuiz()" style="margin-top:20px">Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== BLOGS ========== -->
+<div id="page-blogs" class="page">
+  <div class="blog-page">
+    <div class="section-title"><h2>📰 Tech Blog & Updates</h2><p>Stay updated with the latest in technology and education</p></div>
+    <div class="blog-grid" id="blog-grid"></div>
+  </div>
+</div>
+
+<!-- ========== CERTIFICATE ========== -->
+<div id="page-certificate" class="page">
+  <div class="cert-page">
+    <div class="section-title"><h2>🏆 Certificate Verification</h2><p>Enter your roll number to verify your certificate online</p></div>
+    <div class="cert-search-box">
+      <h2>Verify Certificate</h2>
+      <p>Enter your Roll Number issued by thinkEDU.com</p>
+      <div class="cert-input-row">
+        <input type="text" id="cert-roll" placeholder="e.g. TE-2024-001" />
+        <button class="btn btn-primary" onclick="verifyCert()">Verify</button>
+      </div>
+      <div id="cert-result-box"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== CONTACT ========== -->
+<div id="page-contact" class="page">
+  <div class="contact-page">
+    <div class="section-title"><h2>📞 Contact Us</h2><p>We are here to help you with all your queries</p></div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Get in Touch</h3>
+        <div class="info-item"><div class="info-icon">📍</div><div><h4>Address</h4><p>123, Education Hub, Near City Mall,<br>Ahmedabad, Gujarat – 380001</p></div></div>
+        <div class="info-item"><div class="info-icon">📞</div><div><h4>Phone</h4><p>+91 98765 43210</p></div></div>
+        <div class="info-item"><div class="info-icon">✉️</div><div><h4>Email</h4><p>info@thinkedu.com</p></div></div>
+        <div class="info-item"><div class="info-icon">🕐</div><div><h4>Hours</h4><p>Mon – Sat: 9:00 AM – 7:00 PM</p></div></div>
+        <div class="map-placeholder">🗺️ Google Map would appear here<br><small>Embed your Google Maps iframe</small></div>
+      </div>
+      <div class="contact-form-box">
+        <h3>Send a Message</h3>
+        <div class="form-group"><label>Full Name</label><input type="text" id="c-name" placeholder="Your full name"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="c-email" placeholder="your@email.com"></div>
+        <div class="form-group"><label>Subject</label><input type="text" id="c-subject" placeholder="How can we help?"></div>
+        <div class="form-group"><label>Message</label><textarea id="c-msg" rows="4" placeholder="Write your message..."></textarea></div>
+        <button class="btn-block" onclick="sendContact()">Send Message</button>
+        <div class="success-msg" id="contact-success">✅ Your message has been sent! We'll reply within 24 hours.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LOGIN / REGISTER ========== -->
+<div id="page-login" class="page">
+  <div class="login-page">
+    <div class="login-container">
+      <div class="login-header">
+        <h2>think<span style="color:#fbbf24">EDU</span>.com</h2>
+        <p>Student & Admin Portal</p>
+      </div>
+      <div class="login-body">
+        <div class="tab-row">
+          <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Login</button>
+          <button class="tab-btn" id="tab-register" onclick="switchTab('register')">Register</button>
+        </div>
+        <!-- Login Form -->
+        <div id="form-login">
+          <div class="form-group"><label>Email / Username</label><input type="text" id="login-user" placeholder="student@email.com"></div>
+          <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="Enter password"></div>
+          <div class="form-group">
+            <label>Role</label>
+            <select id="login-role">
+              <option value="student">Student</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="err-msg" id="login-err">❌ Invalid credentials. Try: student/pass123 or admin/admin123</div>
+          <button class="btn-block" onclick="doLogin()">Login</button>
+          <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--text2)">Demo: <strong>student</strong> / <strong>pass123</strong> &nbsp;|&nbsp; <strong>admin</strong> / <strong>admin123</strong></p>
+        </div>
+        <!-- Register Form -->
+        <div id="form-register" style="display:none">
+          <div class="form-group"><label>Full Name</label><input type="text" id="reg-name" placeholder="Your full name"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="your@email.com"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" id="reg-phone" placeholder="+91 XXXXX XXXXX"></div>
+          <div class="form-group"><label>Course Interest</label>
+            <select id="reg-course">
+              <option>Basic Computer</option><option>Advance Excel</option><option>Accounting Tally Prime</option>
+              <option>Graphic Designing</option><option>Web Designing</option><option>AutoCAD</option>
+              <option>Programming C</option><option>CCC</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Password</label><input type="password" id="reg-pass" placeholder="Create password"></div>
+          <button class="btn-block" onclick="doRegister()">Create Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COURSE LOGIN MODAL -->
+<div class="modal-overlay hidden" id="course-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>🔐 Course Access</h2>
+    <p class="sub" id="modal-course-name">Login to access this course</p>
+    <div class="form-group"><label>Username</label><input type="text" id="m-user" placeholder="Enter username"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="m-pass" placeholder="Enter password"></div>
+    <div class="err-msg" id="modal-err">❌ Wrong credentials. Try: student / pass123</div>
+    <button class="btn-block" onclick="courseLogin()">Access Course</button>
+    <p style="text-align:center;margin-top:14px;font-size:13px;color:var(--text2)">Not registered? <span class="link-text" onclick="closeModal();showPage('login')">Sign up free</span></p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <h3>think<span>EDU</span>.com</h3>
+      <p>Empowering students with quality computer education since 2010. Online and offline learning for all levels.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Courses</h4>
+      <a>Basic Computer</a><a>Advance Excel</a><a>Tally Prime</a>
+      <a>Graphic Designing</a><a>Web Designing</a><a>AutoCAD</a>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="showPage('quiz')">Online Quiz</a>
+      <a onclick="showPage('certificate')">Verify Certificate</a>
+      <a onclick="showPage('blogs')">Tech Blog</a>
+      <a onclick="showPage('contact')">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a>📍 Ahmedabad, Gujarat</a>
+      <a>📞 +91 98765 43210</a>
+      <a>✉️ info@thinkedu.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 thinkEDU.com — All Rights Reserved | Designed with ❤️ for students</div>
+</footer>
+
+<script>
+// ===================== DATA =====================
+const COURSES = [
+  {id:'basic',name:'Basic Computer',icon:'💻',color:'#dbeafe',desc:'MS Office, Internet, Typing & fundamentals',duration:'3 Months',tag:'Beginner'},
+  {id:'excel',name:'Advance Excel',icon:'📊',color:'#d1fae5',desc:'Formulas, Pivot Tables, Macros, Charts',duration:'2 Months',tag:'Intermediate'},
+  {id:'tally',name:'Accounting Tally Prime',icon:'📒',color:'#fef3c7',desc:'GST, Accounting, Inventory & Payroll',duration:'3 Months',tag:'Professional'},
+  {id:'graphic',name:'Graphic Designing',icon:'🎨',color:'#fce7f3',desc:'Photoshop, CorelDRAW, Illustrator',duration:'4 Months',tag:'Creative'},
+  {id:'textile',name:'Textile Digital Designing',icon:'🧵',color:'#ede9fe',desc:'Fabric patterns, CAD for textile design',duration:'3 Months',tag:'Specialized'},
+  {id:'album',name:'Photo Album Creation',icon:'📸',color:'#ffedd5',desc:'Adobe Lightroom, album design & printing',duration:'1 Month',tag:'Creative'},
+  {id:'autocad',name:'AutoCAD Civil & Engineer',icon:'📐',color:'#e0f2fe',desc:'2D/3D drawings, civil & mechanical design',duration:'4 Months',tag:'Engineering'},
+  {id:'cprog',name:'Programming C',icon:'⌨️',color:'#dcfce7',desc:'C language, logic building, algorithms',duration:'3 Months',tag:'Coding'},
+  {id:'web',name:'Web Designing',icon:'🌐',color:'#eff6ff',desc:'HTML, CSS, JavaScript, Bootstrap',duration:'4 Months',tag:'Coding'},
+  {id:'handwriting',name:'Improvement Handwriting',icon:'✍️',color:'#fef9c3',desc:'Penmanship, calligraphy techniques',duration:'2 Months',tag:'Skill'},
+  {id:'ccc',name:'CCC',icon:'🏅',color:'#f0fdf4',desc:'Course on Computer Concepts – NIELIT certified',duration:'3 Months',tag:'Government'}
+];
+const LESSONS = {
+  basic:[
+    {title:'Introduction to Computers',dur:'12:30',done:true},
+    {title:'MS Word Basics',dur:'18:45',done:true},
+    {title:'MS Excel Introduction',dur:'22:10',done:false},
+    {title:'Internet & Email',dur:'15:00',done:false},
+    {title:'Touch Typing Practice',dur:'10:20',done:false}
+  ],
+  excel:[
+    {title:'Excel Interface & Navigation',dur:'14:00',done:true},
+    {title:'Formulas & Functions',dur:'25:30',done:false},
+    {title:'VLOOKUP & HLOOKUP',dur:'20:15',done:false},
+    {title:'Pivot Tables',dur:'18:00',done:false}
+  ]
+};
+const QUIZ_DATA = {
+  basic:[
+    {q:'What does CPU stand for?',opts:['Central Processing Unit','Computer Personal Unit','Central Program Utility','Core Processor Unit'],ans:0},
+    {q:'Which key is used to delete text to the right of cursor?',opts:['Backspace','Delete','Ctrl+Z','Shift'],ans:1},
+    {q:'What is the full form of RAM?',opts:['Read Access Memory','Random Access Memory','Rapid Application Memory','Read Application Memory'],ans:1},
+    {q:'Which of these is an Input device?',opts:['Monitor','Printer','Keyboard','Speaker'],ans:2},
+    {q:'MS Word is used for:',opts:['Calculations','Presentations','Word Processing','Designing'],ans:2}
+  ],
+  excel:[
+    {q:'Which symbol starts a formula in Excel?',opts:['#','@','=','$'],ans:2},
+    {q:'Function to find the sum of cells A1 to A10:',opts:['=ADD(A1:A10)','=TOTAL(A1:A10)','=SUM(A1:A10)','=COUNT(A1:A10)'],ans:2},
+    {q:'Pivot Table is used to:',opts:['Format cells','Analyze large data','Create charts','Print reports'],ans:1},
+    {q:'Keyboard shortcut to save a file in Excel:',opts:['Ctrl+P','Ctrl+S','Ctrl+A','F12'],ans:1},
+    {q:'VLOOKUP searches in the:',opts:['Last column','Middle column','First column','Any column'],ans:2}
+  ],
+  tally:[
+    {q:'Tally Prime is software for:',opts:['Designing','Accounting','Programming','Presentations'],ans:1},
+    {q:'GST stands for:',opts:['General Sales Tax','Goods and Service Tax','Government Sales Tax','Global Service Tax'],ans:1},
+    {q:'In Tally, F8 is shortcut for:',opts:['Purchase Voucher','Sales Voucher','Journal Voucher','Receipt'],ans:1},
+    {q:'Balance Sheet shows:',opts:['Profit/Loss','Assets & Liabilities','Cash Flow','Tax'],ans:1},
+    {q:'A Ledger in Tally stores:',opts:['Reports','Account transactions','Images','Tax files'],ans:1}
+  ]
+};
+const CERTIFICATES = [
+  {roll:'TE-2024-001',name:'Rahul Sharma',course:'Basic Computer',date:'March 15, 2024',grade:'A+'},
+  {roll:'TE-2024-002',name:'Priya Patel',course:'Advance Excel',date:'April 2, 2024',grade:'A'},
+  {roll:'TE-2024-003',name:'Amit Verma',course:'Web Designing',date:'February 28, 2024',grade:'B+'},
+  {roll:'TE-2024-004',name:'Sneha Joshi',course:'Graphic Designing',date:'March 20, 2024',grade:'A+'},
+  {roll:'TE-2024-005',name:'Demo Student',course:'Basic Computer',date:'April 5, 2024',grade:'A'}
+];
+const BLOGS = [
+  {title:'Top 10 Excel Tips Every Professional Must Know',tag:'Excel',date:'April 5, 2024',icon:'📊',color:'#d1fae5',summary:'Master these Excel tricks to save hours of work every week...'},
+  {title:'AI Tools Transforming Graphic Design in 2024',tag:'Design',date:'March 28, 2024',icon:'🎨',color:'#fce7f3',summary:'How artificial intelligence is changing the creative industry...'},
+  {title:'CCC Exam Preparation Guide – Score 100%',tag:'CCC',date:'March 20, 2024',icon:'🏅',color:'#fef3c7',summary:'Complete strategy and resources to crack the NIELIT CCC exam...'},
+  {title:'Why AutoCAD Skills are Essential in 2024',tag:'AutoCAD',date:'March 10, 2024',icon:'📐',color:'#e0f2fe',summary:'Civil engineers and architects need AutoCAD now more than ever...'},
+  {title:'Learn Web Design: From Zero to Hired',tag:'Web',date:'Feb 28, 2024',icon:'🌐',color:'#eff6ff',summary:'A complete roadmap for aspiring web designers starting from scratch...'},
+  {title:'Tally Prime vs Traditional Accounting Methods',tag:'Tally',date:'Feb 15, 2024',icon:'📒',color:'#fef9c3',summary:'Why digital accounting with Tally Prime is the future of business...'}
+];
+
+// i18n translations
+const I18N = {
+  en:{hero_sub:"India's leading computer education institute — Learn, Practice, and Get Certified online.",stat1:"Students Enrolled",stat2:"Courses Available",stat3:"Video Lessons",stat4:"Pass Rate",why_title:"Why Choose thinkEDU?",why_sub:"Everything you need for a complete computer education journey",courses_title:"Our Courses",courses_page_title:"All Courses",courses_page_sub:"Choose a course and start your learning journey today",f1:"Secure Video Lessons",f2:"PDF Notes",f3:"Online Quizzes",f4:"Verified Certificates",f5:"Mobile Friendly",f6:"Multi-language"},
+  hi:{hero_sub:"भारत का अग्रणी कंप्यूटर शिक्षा संस्थान — ऑनलाइन सीखें, अभ्यास करें और प्रमाणित हों।",stat1:"नामांकित छात्र",stat2:"उपलब्ध कोर्सेस",stat3:"वीडियो लेसन",stat4:"पास दर",why_title:"thinkEDU क्यों चुनें?",why_sub:"पूर्ण कंप्यूटर शिक्षा के लिए सब कुछ",courses_title:"हमारे कोर्सेस",courses_page_title:"सभी कोर्सेस",courses_page_sub:"एक कोर्स चुनें और आज ही अपनी लर्निंग यात्रा शुरू करें",f1:"सुरक्षित वीडियो लेसन",f2:"पीडीएफ नोट्स",f3:"ऑनलाइन क्विज",f4:"प्रमाणित सर्टिफिकेट",f5:"मोबाइल फ्रेंडली",f6:"बहु-भाषा"},
+  gu:{hero_sub:"ભારતની અગ્રણી કમ્પ્યુટર શિક્ષણ સંસ્થા — ઓનલાઇન શીખો, અભ્યાસ કરો અને પ્રમાણિત બનો.",stat1:"નોંધાયેલ વિદ્યાર્થીઓ",stat2:"ઉપલબ્ધ કોર્સ",stat3:"વિડિઓ પાઠ",stat4:"પાસ રેટ",why_title:"thinkEDU શા માટે પસંદ કરો?",why_sub:"સંપૂર્ણ કમ્પ્યુટર શિક્ષણ માટે બધું",courses_title:"અમારા કોર્સ",courses_page_title:"બધા કોર્સ",courses_page_sub:"કોર્સ પસંદ કરો અને આજે જ શ‍ીખો",f1:"સુરક્ષિત વિડિઓ પાઠ",f2:"PDF નોટ્સ",f3:"ઓનલાઇન ક્વિઝ",f4:"ચકાસાયેલ પ્રમાણપત્ર",f5:"મોબાઇલ ફ્રેન્ડ‌લી",f6:"બહુ-ભાષા"},
+  mr:{hero_sub:"भारतातील आघाडीची संगणक शिक्षण संस्था — ऑनलाइन शिका, सराव करा आणि प्रमाणित व्हा.",stat1:"नोंदणीकृत विद्यार्थी",stat2:"उपलब्ध अभ्यासक्रम",stat3:"व्हिडिओ धडे",stat4:"उत्तीर्ण दर",why_title:"thinkEDU का निवडावे?",why_sub:"संपूर्ण संगणक शिक्षणासाठी सर्व काही",courses_title:"आमचे अभ्यासक्रम",courses_page_title:"सर्व अभ्यासक्रम",courses_page_sub:"अभ्यासक्रम निवडा आणि आजच शिकणे सुरू करा",f1:"सुरक्षित व्हिडिओ धडे",f2:"PDF नोट्स",f3:"ऑनलाइन क्विझ",f4:"प्रमाणित प्रमाणपत्रे",f5:"मोबाइल अनुकूल",f6:"बहु-भाषा"},
+  ko:{hero_sub:"인도 최고의 컴퓨터 교육 기관 — 온라인으로 배우고, 연습하고, 자격증을 취득하세요.",stat1:"등록된 학생",stat2:"이용 가능한 강좌",stat3:"영상 강의",stat4:"합격률",why_title:"thinkEDU를 선택하는 이유",why_sub:"완전한 컴퓨터 교육을 위한 모든 것",courses_title:"우리의 강좌",courses_page_title:"모든 강좌",courses_page_sub:"강좌를 선택하고 오늘 학습을 시작하세요",f1:"보안 영상 강의",f2:"PDF 노트",f3:"온라인 퀴즈",f4:"인증된 수료증",f5:"모바일 친화적",f6:"다국어 지원"},
+  ja:{hero_sub:"インド有数のコンピュータ教育機関——オンラインで学び、練習し、認定を取得。",stat1:"登録学生数",stat2:"利用可能なコース",stat3:"ビデオレッスン",stat4:"合格率",why_title:"なぜthinkEDUを選ぶか？",why_sub:"完全なコンピュータ教育に必要なすべて",courses_title:"コース一覧",courses_page_title:"全コース",courses_page_sub:"コースを選んで学習を始めよう",f1:"安全な動画レッスン",f2:"PDFノート",f3:"オンラインクイズ",f4:"認定証",f5:"モバイル対応",f6:"多言語対応"},
+  zh:{hero_sub:"印度领先的计算机教育机构——在线学习、练习并获得认证。",stat1:"注册学生",stat2:"可用课程",stat3:"视频课程",stat4:"通过率",why_title:"为什么选择thinkEDU？",why_sub:"完整计算机教育所需的一切",courses_title:"我们的课程",courses_page_title:"所有课程",courses_page_sub:"选择课程，开始您的学习之旅",f1:"安全视频课程",f2:"PDF笔记",f3:"在线测验",f4:"认证证书",f5:"移动友好",f6:"多语言"}
+};
+
+// ===================== STATE =====================
+let currentUser = null;
+let currentCourse = null;
+let currentLang = 'en';
+let quizState = {course:null,idx:0,score:0,answered:false};
+let videoPlaying = false;
+let translatedContent = '';
+let mobileMenuOpen = false;
+
+// ===================== NAVIGATION =====================
+function showPage(id){
+  if((id==='dashboard'||id==='lesson')&&!currentUser){showPage('login');return;}
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const page = document.getElementById('page-'+id);
+  if(page) page.classList.add('active');
+  document.querySelectorAll('nav a.nav-link').forEach(l=>l.classList.remove('active'));
+  window.scrollTo(0,0);
+}
+
+// ===================== MOBILE MENU =====================
+function toggleMobileMenu(){
+  mobileMenuOpen = !mobileMenuOpen;
+  const menu = document.getElementById('mobile-menu');
+  const ham = document.getElementById('hamburger');
+  if(mobileMenuOpen){
+    menu.classList.add('open');
+    ham.classList.add('is-open');
+  } else {
+    menu.classList.remove('open');
+    ham.classList.remove('is-open');
+  }
+}
+function closeMobileMenu(){
+  mobileMenuOpen = false;
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('is-open');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e){
+  const menu = document.getElementById('mobile-menu');
+  const ham = document.getElementById('hamburger');
+  if(mobileMenuOpen && !menu.contains(e.target) && !ham.contains(e.target)){
+    closeMobileMenu();
+  }
+  // Close lang dropdown if clicking outside
+  const langBtn = document.getElementById('lang-btn');
+  const langDD = document.getElementById('lang-dropdown');
+  if(langDD && langDD.classList.contains('open') && !langBtn.contains(e.target) && !langDD.contains(e.target)){
+    langDD.classList.remove('open');
+    langBtn.classList.remove('open');
+  }
+});
+
+// ===================== LANGUAGE SWITCHER =====================
+const LANG_LABELS = {en:'🌐 EN', gu:'🇮🇳 GU', hi:'🇮🇳 HI', mr:'🇮🇳 MR', ko:'🇰🇷 KO', ja:'🇯🇵 JA', zh:'🇨🇳 ZH'};
+
+function toggleLangDropdown(e){
+  e.stopPropagation();
+  const btn = document.getElementById('lang-btn');
+  const dd = document.getElementById('lang-dropdown');
+  dd.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function selectLang(lang){
+  currentLang = lang;
+  // Update desktop button label
+  const btnLabel = document.getElementById('lang-btn-label');
+  if(btnLabel) btnLabel.textContent = LANG_LABELS[lang] || '🌐 EN';
+  // Update desktop dropdown active state
+  document.querySelectorAll('#lang-dropdown .lang-opt').forEach(el=>{
+    el.classList.toggle('active-lang', el.dataset.lang===lang);
+  });
+  // Update mobile pill active state
+  document.querySelectorAll('.mobile-lang-pill').forEach(el=>{
+    el.classList.toggle('active-lang', el.dataset.lang===lang);
+  });
+  // Close dropdown
+  document.getElementById('lang-dropdown').classList.remove('open');
+  document.getElementById('lang-btn').classList.remove('open');
+  // Apply translations
+  switchLanguage(lang);
+}
+
+function switchLanguage(lang){
+  currentLang = lang;
+  const t = I18N[lang] || I18N['en'];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(t[key]) el.textContent = t[key];
+  });
+  if(translatedContent){
+    translateTextContent(translatedContent, lang);
+  }
+  document.body.style.direction = ['ar','ur','he'].includes(lang) ? 'rtl' : 'ltr';
+  showToast('Language changed!');
+}
+
+// ===================== AUTH =====================
+const USERS={student:{pass:'pass123',name:'Demo Student',role:'student'},admin:{pass:'admin123',name:'Admin User',role:'admin'}};
+function doLogin(){
+  const u=document.getElementById('login-user').value.trim();
+  const p=document.getElementById('login-pass').value;
+  const user=USERS[u];
+  if(user&&user.pass===p){
+    currentUser={username:u,...user};
+    document.getElementById('nav-login-btn').style.display='none';
+    document.getElementById('nav-logout-btn').style.display='block';
+    document.getElementById('dashboard-link').style.display='block';
+    document.getElementById('m-dash').style.display='block';
+    document.getElementById('m-login-btn').style.display='none';
+    document.getElementById('m-logout-btn').style.display='block';
+    loadDashboard();
+    showPage('dashboard');
+    showToast('Welcome back, '+user.name+'! 🎉');
+  } else {
+    document.getElementById('login-err').style.display='block';
+  }
+}
+function doRegister(){
+  const name=document.getElementById('reg-name').value;
+  if(!name){showToast('Please fill all fields');return;}
+  showToast('Account created! Please login now.');
+  switchTab('login');
+}
+function logout(){
+  currentUser=null;
+  document.getElementById('nav-login-btn').style.display='block';
+  document.getElementById('nav-logout-btn').style.display='none';
+  document.getElementById('dashboard-link').style.display='none';
+  document.getElementById('m-dash').style.display='none';
+  document.getElementById('m-login-btn').style.display='block';
+  document.getElementById('m-logout-btn').style.display='none';
+  showPage('home');
+  showToast('Logged out successfully');
+}
+function switchTab(t){
+  document.getElementById('form-login').style.display=t==='login'?'block':'none';
+  document.getElementById('form-register').style.display=t==='register'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('active',t==='login');
+  document.getElementById('tab-register').classList.toggle('active',t==='register');
+  document.getElementById('login-err').style.display='none';
+}
+
+// ===================== COURSES =====================
+function buildCourseGrid(container,mini=false){
+  const el=document.getElementById(container);
+  if(!el)return;
+  el.innerHTML=COURSES.map(c=>{
+    if(mini)return`<div class="course-mini" onclick="openCourse('${c.id}','${c.name}')"><div class="c-icon">${c.icon}</div><h4>${c.name}</h4><p>${c.duration}</p></div>`;
+    return`<div class="course-card" onclick="openCourse('${c.id}','${c.name}')">
+      <div class="course-card-banner" style="background:${c.color}">${c.icon}</div>
+      <div class="course-card-body">
+        <h3>${c.name}</h3><p>${c.desc}</p>
+        <span class="course-tag">${c.tag}</span>
+        <span class="course-tag" style="margin-left:6px;background:#f0fdf4;color:#059669">${c.duration}</span>
+        <button class="course-cta">Start Learning →</button>
+      </div></div>`;
+  }).join('');
+}
+function openCourse(id,name){
+  if(!currentUser){
+    document.getElementById('modal-course-name').textContent='Access: '+name;
+    currentCourse={id,name};
+    document.getElementById('course-modal').classList.remove('hidden');
+    document.getElementById('modal-err').style.display='none';
+  } else {
+    loadLesson(id,name);
+  }
+}
+function courseLogin(){
+  const u=document.getElementById('m-user').value.trim();
+  const p=document.getElementById('m-pass').value;
+  const user=USERS[u];
+  if(user&&user.pass===p){
+    currentUser={username:u,...user};
+    document.getElementById('nav-login-btn').style.display='none';
+    document.getElementById('nav-logout-btn').style.display='block';
+    document.getElementById('dashboard-link').style.display='block';
+    document.getElementById('m-dash').style.display='block';
+    document.getElementById('m-login-btn').style.display='none';
+    document.getElementById('m-logout-btn').style.display='block';
+    closeModal();
+    loadLesson(currentCourse.id,currentCourse.name);
+    showToast('Welcome! Now accessing '+currentCourse.name);
+  } else {
+    document.getElementById('modal-err').style.display='block';
+  }
+}
+function closeModal(){document.getElementById('course-modal').classList.add('hidden');}
+
+// ===================== LESSON =====================
+function loadLesson(id,name){
+  document.getElementById('lesson-title').textContent=name;
+  document.getElementById('lesson-meta').textContent='Module 1 • Online Course • Enrolled';
+  const lessons=LESSONS[id]||LESSONS.basic;
+  const container=document.getElementById('lessons-container');
+  container.innerHTML=lessons.map((l,i)=>`
+    <div class="lesson-item ${l.done?'done':''}" onclick="selectLesson(${i},'${l.title}')">
+      <div class="li-num">${l.done?'✓':(i+1)}</div>
+      <h4>${l.title}</h4>
+      <span class="dur">▶ ${l.dur}</span>
+    </div>`).join('');
+  showPage('lesson');
+}
+function selectLesson(i,title){
+  showToast('Loading: '+title);
+  document.getElementById('lesson-title').textContent=title;
+}
+let videoDuration=0,currentTime=0;
+function togglePlay(){
+  videoPlaying=!videoPlaying;
+  document.getElementById('play-icon').textContent=videoPlaying?'⏸':'▶';
+  document.getElementById('video-overlay').style.display=videoPlaying?'none':'flex';
+  if(videoPlaying){
+    clearInterval(window.vidTimer);
+    window.vidTimer=setInterval(()=>{
+      currentTime=Math.min(currentTime+1,180);
+      const pct=(currentTime/180)*100;
+      document.getElementById('vc-fill').style.width=pct+'%';
+      const m=Math.floor(currentTime/60),s=currentTime%60;
+      document.getElementById('vc-time').textContent=`${m}:${s<10?'0'+s:s} / 3:00`;
+      if(currentTime>=180){clearInterval(window.vidTimer);videoPlaying=false;document.getElementById('play-icon').textContent='▶';document.getElementById('video-overlay').style.display='flex';}
+    },1000);
+  } else clearInterval(window.vidTimer);
+}
+function toggleMute(){showToast('Volume toggled')}
+function seekVideo(e){const pct=e.offsetX/e.currentTarget.offsetWidth;currentTime=Math.round(pct*180);document.getElementById('vc-fill').style.width=(pct*100)+'%'}
+
+// ===================== DASHBOARD =====================
+function loadDashboard(){
+  if(!currentUser)return;
+  const n=currentUser.name;
+  document.getElementById('dash-name').textContent='Welcome back, '+n+'!';
+  document.getElementById('dash-avatar').textContent=n[0].toUpperCase();
+  const prog=[{c:'Basic Computer',pct:65,done:5,total:8},{c:'Advance Excel',pct:30,done:3,total:10}];
+  document.getElementById('dash-progress').innerHTML=prog.map(p=>`
+    <div class="progress-card" onclick="openCourse('basic','${p.c}')">
+      <div class="progress-card-header"><h4>${p.c}</h4><span class="progress-pct">${p.pct}%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${p.pct}%"></div></div>
+      <div class="progress-info"><span>${p.done}/${p.total} Lessons Done</span><span>Click to continue →</span></div>
+    </div>`).join('');
+  document.getElementById('dash-certs').innerHTML=`
+    <div class="cert-card">
+      <div class="cert-icon">🏆</div>
+      <div class="cert-info">
+        <h4>Basic Computer</h4>
+        <p>Issued by thinkEDU.com • March 2024</p>
+        <div class="roll">Roll No: TE-2024-005 | Grade: A</div>
+      </div>
+    </div>`;
+}
+
+// ===================== NOTES =====================
+function buildNotes(){
+  document.getElementById('notes-grid').innerHTML=COURSES.slice(0,8).map(c=>`
+    <div class="note-card">
+      <div class="note-card-icon">${c.icon}</div>
+      <h3>${c.name}</h3>
+      <p>Chapter-wise notes, formulas, shortcuts and practice exercises in PDF format.</p>
+      <button class="btn-download" onclick="downloadNote('${c.name}')">⬇ Download PDF</button>
+    </div>`).join('');
+}
+function downloadNote(name){showToast('Downloading notes for '+name+' (Demo mode)')}
+
+// ===================== QUIZ =====================
+function buildQuizSelect(){
+  document.getElementById('quiz-course-select').innerHTML=Object.keys(QUIZ_DATA).map(k=>{
+    const c=COURSES.find(x=>x.id===k);
+    return`<div class="course-mini" onclick="startQuiz('${k}','${c?c.name:k}')"><div class="c-icon">${c?c.icon:'📝'}</div><h4>${c?c.name:k}</h4><p>5 Questions</p></div>`;
+  }).join('');
+}
+function startQuiz(id,name){
+  quizState={course:id,name:name,idx:0,score:0,answered:false};
+  document.getElementById('quiz-select').style.display='none';
+  document.getElementById('quiz-area').style.display='block';
+  document.getElementById('quiz-result').style.display='none';
+  document.getElementById('quiz-course-name').textContent=name;
+  renderQuestion();
+}
+function renderQuestion(){
+  const data=QUIZ_DATA[quizState.course];
+  if(quizState.idx>=data.length){showQuizResult();return;}
+  const q=data[quizState.idx];
+  document.getElementById('quiz-progress-badge').textContent=`Q ${quizState.idx+1}/${data.length}`;
+  document.getElementById('quiz-question').textContent=q.q;
+  document.getElementById('quiz-options').innerHTML=q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answerQ(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+  document.getElementById('quiz-feedback').textContent='';
+  document.getElementById('quiz-next-btn').style.display='none';
+  quizState.answered=false;
+}
+function answerQ(i){
+  if(quizState.answered)return;
+  quizState.answered=true;
+  const data=QUIZ_DATA[quizState.course];
+  const q=data[quizState.idx];
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts[q.ans].classList.add('correct');
+  if(i!==q.ans)opts[i].classList.add('wrong');
+  else quizState.score++;
+  document.getElementById('quiz-feedback').textContent=i===q.ans?'✅ Correct!':'❌ Wrong! Correct: '+q.opts[q.ans];
+  document.getElementById('quiz-next-btn').style.display='block';
+}
+function nextQuestion(){quizState.idx++;renderQuestion();}
+function showQuizResult(){
+  document.getElementById('quiz-area').style.display='none';
+  document.getElementById('quiz-result').style.display='block';
+  const pct=Math.round((quizState.score/QUIZ_DATA[quizState.course].length)*100);
+  document.getElementById('score-circle').textContent=pct+'%';
+  document.getElementById('score-msg').textContent=pct>=80?'Excellent! You passed! 🎉':pct>=60?'Good effort! Keep practicing.':'Keep studying and try again!';
+}
+function resetQuiz(){
+  document.getElementById('quiz-select').style.display='block';
+  document.getElementById('quiz-area').style.display='none';
+  document.getElementById('quiz-result').style.display='none';
+}
+
+// ===================== BLOG =====================
+function buildBlogs(){
+  document.getElementById('blog-grid').innerHTML=BLOGS.map(b=>`
+    <div class="blog-card">
+      <div class="blog-banner" style="background:${b.color}">${b.icon}</div>
+      <div class="blog-body">
+        <span class="blog-tag">${b.tag}</span>
+        <h3>${b.title}</h3>
+        <p>${b.summary}</p>
+        <div class="blog-footer"><span>📅 ${b.date}</span><span style="color:var(--primary);font-weight:600">Read More →</span></div>
+      </div>
+    </div>`).join('');
+}
+
+// ===================== CERTIFICATE =====================
+function verifyCert(){
+  const roll=document.getElementById('cert-roll').value.trim().toUpperCase();
+  const cert=CERTIFICATES.find(c=>c.roll===roll);
+  const box=document.getElementById('cert-result-box');
+  if(cert){
+    box.innerHTML=`<div class="cert-result found" style="display:block">
+      <h3 style="color:#065f46">✅ Certificate Verified!</h3>
+      <div class="certificate-display">
+        <div class="cert-header">thinkEDU.com — Certificate of Completion</div>
+        <div class="cert-title">Certificate of Achievement</div>
+        <p style="font-size:14px;color:#6b7280">This certifies that</p>
+        <div class="cert-name-big">${cert.name}</div>
+        <div class="cert-completed">has successfully completed the course in<br><strong style="font-size:18px;color:#1e3a8a">${cert.course}</strong></div>
+        <div class="cert-footer-row">
+          <span>Roll No: <strong>${cert.roll}</strong></span>
+          <span>Grade: <strong>${cert.grade}</strong></span>
+          <span>Date: ${cert.date}</span>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    box.innerHTML=`<div class="cert-result notfound" style="display:block"><h3 style="color:#7f1d1d">❌ Certificate Not Found</h3><p style="margin-top:8px;color:#374151">No certificate found for Roll No: <strong>${roll}</strong>. Please check and try again.<br><small>Try: TE-2024-001 to TE-2024-005</small></p></div>`;
+  }
+}
+
+// ===================== CONTACT =====================
+function sendContact(){
+  const name=document.getElementById('c-name').value;
+  const email=document.getElementById('c-email').value;
+  if(!name||!email){showToast('Please fill all required fields');return;}
+  document.getElementById('contact-success').style.display='block';
+  showToast('Message sent successfully!');
+}
+
+// ===================== FILE TRANSLATION =====================
+async function handleFileUpload(e){
+  const file=e.target.files[0];
+  if(!file)return;
+  const text=await file.text();
+  translatedContent=text;
+  translateTextContent(text,currentLang);
+}
+async function translateTextContent(text,lang){
+  if(lang==='en'){
+    document.getElementById('trans-content').textContent=text;
+    document.getElementById('trans-lang-label').textContent='Original Content (English):';
+    document.getElementById('translated-output').style.display='block';
+    return;
+  }
+  document.getElementById('translated-output').style.display='block';
+  document.getElementById('trans-content').textContent='Translating...';
+  const langNames={hi:'Hindi',gu:'Gujarati',mr:'Marathi',ko:'Korean',ja:'Japanese',zh:'Chinese'};
+  const langName=langNames[lang]||lang;
+  document.getElementById('trans-lang-label').textContent=`Translated to ${langName}:`;
+  try {
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:2000,
+        messages:[{role:'user',content:`Translate the following text to ${langName}. Return ONLY the translated text, nothing else:\n\n${text.substring(0,2000)}`}]
+      })
+    });
+    const data=await res.json();
+    if(data.content&&data.content[0]){
+      document.getElementById('trans-content').textContent=data.content[0].text;
+      window._translatedText=data.content[0].text;
+    } else {
+      document.getElementById('trans-content').textContent=`[Translation for ${langName}]\n\n`+text;
+    }
+  } catch(err){
+    const prefix={hi:'हिंदी अनुवाद:\n\n',gu:'ગુજરાતી અનુવાદ:\n\n',mr:'मराठी भाषांतर:\n\n',ko:'한국어 번역:\n\n',ja:'日本語訳:\n\n',zh:'中文翻译:\n\n'};
+    document.getElementById('trans-content').textContent=(prefix[lang]||`[${langName} Translation]:\n\n`)+text;
+    window._translatedText=(prefix[lang]||'')+text;
+  }
+}
+function downloadTranslated(){
+  const content=window._translatedText||document.getElementById('trans-content').textContent;
+  if(!content){showToast('No content to download');return;}
+  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='translated_'+currentLang+'.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('File downloaded!');
+}
+
+// ===================== TOAST =====================
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ===================== INIT =====================
+document.addEventListener('DOMContentLoaded',()=>{
+  buildCourseGrid('home-courses',true);
+  buildCourseGrid('main-courses-grid',false);
+  buildNotes();
+  buildQuizSelect();
+  buildBlogs();
+});
+</script>
+</body>
+</html>
